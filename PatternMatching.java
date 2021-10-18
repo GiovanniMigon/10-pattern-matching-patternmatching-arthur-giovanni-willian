@@ -13,6 +13,7 @@ class PatternMatching {
         String smaller = a.length() < b.length() ? a : b;
 
         int indexOfOccurence = -1;
+        boolean found = false;
 
         int biggerLength = bigger.length();
         int smallerLength = smaller.length();
@@ -30,12 +31,13 @@ class PatternMatching {
                 matchingStreak = smallerIterator = 0;
             }
             if(matchingStreak == smallerLength){
+                System.out.println("Entrou aqui!");
                 return new int[] {indexOfOccurence, biggerIterator};
             }
             biggerIterator++;
         }
 
-        return new int[] {indexOfOccurence, biggerIterator};
+        return new int[] {-1, biggerIterator};
 
     }
 

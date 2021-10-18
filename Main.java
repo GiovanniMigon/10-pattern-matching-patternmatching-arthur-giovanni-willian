@@ -1,17 +1,49 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Main {
 
     public static void main(String[] args) {
 
         System.out.println("*** PATTERN MATCHING ***\n");
-        String s1 = "ABCDCBDCBDACBDABDCBADF";
-        String s2 = "ADF";
-        System.out.println("String 1: " + s1 + " | String 2: " + s2 + "\n");
 
-        System.out.println("* Força Bruta *");
-        int[] bruteForceResults = PatternMatching.bruteForce(s1, s2);
-        System.out.println("Índice de ocorrência: " + bruteForceResults[0]);
-        System.out.println("Iterações: " + bruteForceResults[1]);
+        String book = stringFromFile("book.txt");
+        String[] entries = new String[] {"plumage", "gunwales", "captain"};
 
+        System.out.println("* Força Bruta *\n");
+
+        for(int i = 0; i < entries.length; i++){         
+            String entry = entries[i];
+            int[] bruteForceResults = PatternMatching.bruteForce(entry, book);
+            System.out.println("S1: " + entry + " | S2: (conteúdo do livro em 'book.txt')");
+            System.out.println("Índice de ocorrência: " + bruteForceResults[0]);
+            System.out.println("Iterações: " + bruteForceResults[1] + "\n");
+        }
+
+    }
+
+    public static String stringFromFile(String fileName) {
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(fileName));
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+            while (line != null) {
+                sb.append(line);
+                sb.append(System.lineSeparator());
+                line = br.readLine();
+            }
+            br.close();
+            return sb.toString();
+        } catch (FileNotFoundException error) {
+            System.out.println("Erro, arquivo não encontrado.");
+            return "";
+        } catch (IOException error) {
+            System.out.println("Erro durante a leitura do arquivo");
+            return "";
+        }
     }
 
 }
