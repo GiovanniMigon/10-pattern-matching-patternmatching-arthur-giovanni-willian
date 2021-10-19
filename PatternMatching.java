@@ -13,7 +13,6 @@ class PatternMatching {
         String smaller = a.length() < b.length() ? a : b;
 
         int indexOfOccurence = -1;
-        boolean found = false;
 
         int biggerLength = bigger.length();
         int smallerLength = smaller.length();
