@@ -10,16 +10,26 @@ public class Main {
         System.out.println("*** PATTERN MATCHING ***\n");
 
         String book = stringFromFile("book.txt");
-        String[] entries = new String[] {"plumage", "gunwales", "captain"};
+        String[] entries = new String[] { "plumage", "gunwales", "captain" };
 
         System.out.println("* Força Bruta *\n");
 
-        for(int i = 0; i < entries.length; i++){         
+        for (int i = 0; i < entries.length; i++) {
             String entry = entries[i];
             int[] bruteForceResults = PatternMatching.bruteForce(entry, book);
             System.out.println("S1: " + entry + " | S2: (conteúdo do livro em 'book.txt')");
             System.out.println("Índice de ocorrência: " + bruteForceResults[0]);
             System.out.println("Iterações: " + bruteForceResults[1] + "\n");
+        }
+
+        System.out.println("\n* Rabin Karp *\n");
+
+        for (int i = 0; i < entries.length; i++) {
+            String entry = entries[i];
+            int[] rabinKarpResults = PatternMatching.rabinKarp(entry, book);
+            System.out.println("S1: " + entry + " | S2: (conteúdo do livro em 'book.txt')");
+            System.out.println("Índice de ocorrência: " + rabinKarpResults[0]);
+            System.out.println("Iterações: " + rabinKarpResults[1] + "\n");
         }
 
     }
