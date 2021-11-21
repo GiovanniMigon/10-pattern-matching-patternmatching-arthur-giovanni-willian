@@ -32,6 +32,16 @@ public class Main {
             System.out.println("Iterações: " + rabinKarpResults[1] + "\n");
         }
 
+        System.out.println("\n* Knuth-Morris-Pratt *\n");
+
+        for (int i = 0; i < entries.length; i++) {
+            String entry = entries[i];
+            int[] kmpResults = PatternMatching.KMPSearch(entry, book);
+            System.out.println("S1: " + entry + " | S2: (conteúdo do livro em 'book.txt')");
+            System.out.println("Índice de ocorrência: " + kmpResults[0]);
+            System.out.println("Iterações: " + kmpResults[1] + "\n");
+        }
+
     }
 
     public static String stringFromFile(String fileName) {
