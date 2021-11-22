@@ -9,7 +9,7 @@ public class Main {
 
         System.out.println("*** PATTERN MATCHING ***\n");
 
-        String book = stringFromFile("book.txt");
+        String book = stringFromFile("Book.txt");
         String[] entries = new String[] { "plumage", "gunwales", "captain" };
 
         System.out.println("* Força Bruta *\n");
