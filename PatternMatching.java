@@ -99,6 +99,7 @@ class PatternMatching {
      */
     public static int[] KMPSearch(String pat, String txt) {
         KMPSearchIterations = 0;
+        KMPSearchInstructions = 0;
 
         int M = pat.length();
         int N = txt.length();
