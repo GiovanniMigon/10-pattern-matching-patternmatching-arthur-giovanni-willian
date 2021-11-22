@@ -64,7 +64,7 @@ class PatternMatching {
                 return new int[] { i, iterations }; // ocorrência? colisão?
             }
         }
-        return new int[] { n, iterations }; // nenhuma ocorrência.
+        return new int[] { -1, iterations }; // nenhuma ocorrência.
     }
 
     // Notação: o padrão tem M caracteres, o texto tem N caracteres, o alfabeto tem
@@ -87,42 +87,62 @@ class PatternMatching {
     }
 
     private static int KMPSearchIterations = 0;
+    private static int KMPSearchInstructions = 0;
 
-    // KMP pattern searching algorithm
+    /**
+     * 
+     * @param pat First String.
+     * @param txt Second String.
+     * @return An array with the index occurence [0], the number of iterations
+     *         needed [1] and the number of instructions needed [2]. -1 if no
+     *         occurences, otherwise the index of the occurence.
+     */
     public static int[] KMPSearch(String pat, String txt) {
         KMPSearchIterations = 0;
 
         int M = pat.length();
         int N = txt.length();
+        KMPSearchInstructions += 4; // Atribuicao + acesso a atributos
 
         // Cria lps[] que vai guardar o maior
         // valor prefixo sufixo para o padrão
         int lps[] = new int[M];
         int j = 0; // index for pat[]
+        KMPSearchInstructions += 2; // Atribuicao
 
         // Calcula lps[]
         computeLPSArray(pat, M, lps);
 
         int i = 0; // index for txt[]
+        KMPSearchInstructions++; // Atribuicao
         while (i < N) {
             KMPSearchIterations++;
+            KMPSearchInstructions += 5; // Condicao while e primeiro if + acesso a atributos + comparacao
             if (pat.charAt(j) == txt.charAt(i)) {
                 j++;
                 i++;
+                KMPSearchIterations += 4; // Atribuicao e operacao aritmetica
             }
+            KMPSearchInstructions++; // Condicao if
             if (j == M) {
-                return new int[] { i - j, KMPSearchIterations };
+                KMPSearchInstructions += 2; // Return e operacao aritmetica
+                return new int[] { i - j, KMPSearchIterations, KMPSearchInstructions };
             } else if (i < N && pat.charAt(j) != txt.charAt(i)) { // mismatch após j matches
+                KMPSearchInstructions += 5; // Tudo dentro do else if soma 5
                 // Não faz match dos caracteres lps[0..lps[j-1]],
                 // não é necesssário, eles combinarão
-                if (j != 0)
+                if (j != 0) {
                     j = lps[j - 1];
-                else
+                    KMPSearchInstructions += 4; // Condicao if, atribuicao, acesso ao array e operacao aritmetica
+                } else {
                     i = i + 1;
+                    KMPSearchInstructions += 2; // Atribuicao e operacao aritmetica
+                }
             }
         }
 
-        return null;
+        KMPSearchInstructions += 2; // Return
+        return new int[] { -1, KMPSearchIterations, KMPSearchInstructions };
     }
 
     private static void computeLPSArray(String pat, int M, int lps[]) {
@@ -130,22 +150,27 @@ class PatternMatching {
         int len = 0;
         int i = 1;
         lps[0] = 0; // lps[0] is always 0
+        KMPSearchInstructions += 4; // Atribuicoes e acesso a posicao do array
 
         // Loop calcula lps[i] for i = 1 to M-1
         while (i < M) {
             KMPSearchIterations++;
+            KMPSearchInstructions += 4; // Condicao primeiro if, acesso a atributos e comparacao
             if (pat.charAt(i) == pat.charAt(len)) {
                 len++;
                 lps[i] = len;
                 i++;
+                KMPSearchInstructions += 6; // Atribuicao, operacoes aritmeticas, acesso ao array
             } else // (pat[i] != pat[len])
             {
                 if (len != 0) {
                     len = lps[len - 1];
+                    KMPSearchInstructions += 4; // Condicao if, atribuicao, acesso ao array e operacao aritmetica
                 } else // if (len == 0)
                 {
                     lps[i] = len;
                     i++;
+                    KMPSearchInstructions += 4; // Acesso ao array, atribuicao e operacao aritmetica
                 }
             }
         }

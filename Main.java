@@ -39,7 +39,8 @@ public class Main {
             int[] kmpResults = PatternMatching.KMPSearch(entry, book);
             System.out.println("S1: " + entry + " | S2: (conteúdo do livro em 'book.txt')");
             System.out.println("Índice de ocorrência: " + kmpResults[0]);
-            System.out.println("Iterações: " + kmpResults[1] + "\n");
+            System.out.println("Iterações: " + kmpResults[1]);
+            System.out.println("Instruções: " + kmpResults[2] + "\n");
         }
 
     }
