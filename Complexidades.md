@@ -1,6 +1,6 @@
 ## Tabela de complexidade dos algoritmos de Pattern Matching 
 
-| Algoritimos        | Pior Caso 
+| Algoritmos        | Pior Caso 
 | ------------------ | --------- 
 | Força Bruta        | Θ(nm)     
 | Rabin-Karp         | Θ(nm)     
